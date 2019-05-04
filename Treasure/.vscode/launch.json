@@ -2,37 +2,15 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flash",
-			"type": "fdb",
-			"request": "launch",
-			"program": "${workspaceFolder}/export/flash/bin/Treasure.swf",
-			"preLaunchTask": "debug: flash"
+			"name": "Build + Debug",
+			"type": "lime",
+			"request": "launch"
 		},
 		{
-			"name": "HTML5",
-			"type": "chrome",
+			"name": "Debug",
+			"type": "lime",
 			"request": "launch",
-			"url": "http://127.0.0.1:3000",
-			"sourceMaps": true,
-			"webRoot": "${workspaceFolder}"
-		},
-		{
-			"name": "Windows",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceFolder}/export/windows/bin/Treasure.exe"
-		},
-		{
-			"name": "Linux",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceFolder}/export/linux64/bin/Treasure"
-		},
-		{
-			"name": "Mac",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceFolder}/export/mac64/bin/Treasure.app/Contents/MacOS/Treasure"
+			"preLaunchTask": null
 		},
 		{
 			"name": "Macro",

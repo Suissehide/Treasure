@@ -18,14 +18,23 @@ class Player extends FlxSprite {
 	public function new(X:Float, Y:Float) {
 		super(X, Y);
 
-        loadGraphic("assets/images/Itch release tileset example sprites 01 2x.png");
-        setFacingFlip(FlxObject.LEFT, false, false);
-		setFacingFlip(FlxObject.RIGHT, true, false);
+        loadGraphic("assets/images/player.png", true, 8, 8);
+        setFacingFlip(FlxObject.LEFT, true, false);
+		setFacingFlip(FlxObject.RIGHT, false, false);
 
-		// set direct a true ou set a true quand on lance la partie        cooldown = false;
+		animation.add("idle", [0], 10, true);
+        animation.add("walk", [0, 1], 10, true);
+
+		// set direct a true ou set a true quand on lance la partie
+        // cooldown = false;
 	}
 
 	override public function update(elapsed:Float):Void {
+        if (cooldown_anim)
+            animation.play("walk");
+        else
+            animation.play("idle");
+
 		if (cooldown == true) {
 			// movement allowed
 			if (FlxG.mouse.pressed || FlxG.keys.anyPressed([UP, LEFT, DOWN, RIGHT, Z, Q, S, D])) {
