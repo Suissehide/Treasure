@@ -7,6 +7,7 @@ import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
+import flixel.system.FlxAssets;
 
 class PlayState extends FlxState
 {
@@ -69,8 +70,8 @@ class PlayState extends FlxState
         _hud.cameras = [_uiCamera];
 
 
-		// if (FlxG.sound.music == null)
-			// FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/ost"), 0.3);
+		if (FlxG.sound.music == null)
+		    FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/Celestial"), 0.3);
 
 		FlxG.cameras.flash(0xff131c1b, 0.65);
 		_fading = false;
