@@ -10,6 +10,9 @@ import flixel.util.FlxColor;
 import Math;
 
 class Hud extends FlxTypedGroup<FlxSprite> {
+    public var pass:Bool = false;
+    public var dig:Bool = false;
+
     var _waitButton:FlxButton;
     var _infoButton:FlxButton;
     var _passButton:FlxButton;
@@ -24,18 +27,18 @@ class Hud extends FlxTypedGroup<FlxSprite> {
         super();
         _turn = Turn;
         _player = Player;
-        _turnNumber = new FlxText((((_player.x) * 8) - 290), (((_player.y) * 8) + 20), 0, "");
+        _turnNumber = new FlxText((((_player.x) * 8) - 215), (((_player.y) * 8) - 30), 0, "");
         _turnNumber.setFormat("assets/fonts/Sartdew_Valley.otf");
         _turnNumber.size = 15;
-        _infoButton = new FlxButton((((_player.x) *8) - 290), (((_player.y) * 8) + 210), "");
+        _infoButton = new FlxButton((((_player.x) *8) - 210), (((_player.y) * 8) + 120), "");
         _infoButton.loadGraphic("assets/images/buttonInfo.png", true, 175, 154);
         _infoButton.scale.set(0.2, 0.2);
         _infoButton.updateHitbox();
-        _passButton = new FlxButton((((_player.x) *8) - 290), (((_player.y) * 8) + 170), "");
+        _passButton = new FlxButton((((_player.x) *8) - 210), (((_player.y) * 8) + 80), "", OnPassButton);
         _passButton.loadGraphic("assets/images/buttonPass.png", true, 175, 154);
         _passButton.scale.set(0.2, 0.2);
         _passButton.updateHitbox();
-        _digButton = new FlxButton((((_player.x) *8) - 290), (((_player.y) * 8) + 130), "", testo);
+        _digButton = new FlxButton((((_player.x) *8) - 210), (((_player.y) * 8) + 40), "", OnDigButton);
         _digButton.loadGraphic("assets/images/buttonShovel.png", true, 175, 154);
         _digButton.scale.set(0.2, 0.2);
         _digButton.updateHitbox();
@@ -49,10 +52,13 @@ class Hud extends FlxTypedGroup<FlxSprite> {
 		});
     }
 
-    public function testo():Void {
-				FlxG.switchState(new MenuState());
-			//dig(Level);
+    private function OnDigButton():Void {
+		dig = true;
 	}
+
+    private function OnPassButton():Void {
+        pass = true;
+    }
 
     override public function update(elapsed:Float):Void {
         _turnNumber.text = "Turn: " + _turn._turn;

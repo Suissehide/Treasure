@@ -30,6 +30,8 @@ class VictoryState extends FlxState
 		gibs.start(false, 0.005);
 		
 		var text = new FlxText(0, 0, FlxG.width, "VICTOIRE", 16);
+        text.setFormat("assets/fonts/Stardew_Valley.otf");
+        text.size = 100;
 		text.alignment = CENTER;
 		text.color = 0xffD8EBA2;
 		text.screenCenter(FlxAxes.Y);
@@ -49,6 +51,11 @@ class VictoryState extends FlxState
 				});
 			}
 		}
+
+        #if FLX_KEYBOARD
+		if (FlxG.keys.pressed.R)
+			FlxG.switchState(new PlayState());
+		#end
 		
 		super.update(elapsed);
 	}

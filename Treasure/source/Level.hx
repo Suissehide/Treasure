@@ -16,7 +16,7 @@ class Level
 	public var _mWalls:FlxTilemap;
     public var _mFloor:FlxTilemap;
     public var _spawn:Array<Int> = [];
-    public var _chest:Array<Float>;
+    public var _chest:Array<Float> = [];
 
     var _map:FlxOgmoLoader;
     var _player:Player;
