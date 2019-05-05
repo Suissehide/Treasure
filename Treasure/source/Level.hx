@@ -15,6 +15,8 @@ class Level
 
 	public var _mWalls:FlxTilemap;
     public var _mFloor:FlxTilemap;
+    public var _spawn:Array<Int> = [];
+    public var _chest:Array<Float>;
 
     var _map:FlxOgmoLoader;
     var _player:Player;
@@ -23,6 +25,8 @@ class Level
     public function new(player:Player, monsters:FlxTypedGroup<monsters.Monster>) {
         // super();
 
+        var array:Array<Int>;
+
         _player = player;
         _monsters = monsters;
 
@@ -30,11 +34,18 @@ class Level
 		_map = new FlxOgmoLoader("assets/data/level-1.oel");
 		_mWalls = _map.loadTilemap("assets/images/tiles.png", 8, 8, "walls");
 		_mWalls.follow();
-        _mWalls.setTileProperties(1, FlxObject.ANY);
+        for (i in 1...120)
+            _mWalls.setTileProperties(i, FlxObject.ANY);
 
         _mFloor = _map.loadTilemap("assets/images/tiles.png", 8, 8, "floor");
-		// _mFloor.follow();
-        _mFloor.setTileProperties(1, FlxObject.NONE);
+		for (i in 1...120)
+            _mFloor.setTileProperties(i, FlxObject.NONE);
+
+        for (i in 1...120) {
+            array = _mFloor.getTileInstances(i);
+            if (array != null)
+                _spawn = _spawn.concat(array);
+        }
 
 		_map.loadEntities(placeEntities, "entities");
     }
@@ -44,7 +55,11 @@ class Level
         var y:Int = Std.parseInt(entityData.get("y"));
         if (entityName == "player") {
             _player.x = x;
-            _player.y = y - 2;
+            _player.y = y;
+        }
+        if (entityName == "chest") {
+            _chest[0] = x;
+            _chest[1] = y;
         }
     }
 }
