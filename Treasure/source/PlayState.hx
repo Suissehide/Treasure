@@ -22,7 +22,7 @@ class PlayState extends FlxState
     var _turn:Int = 0;
     
 
-    // var _hud:Hud;
+    var _hud:Hud;
 	var _fading:Bool;
 
 	override public function create():Void
@@ -31,12 +31,12 @@ class PlayState extends FlxState
         _player = new Player(0, 0);
         _map = new Level(_player, _monsters);
     
-        // _hud = new Hud(_player);
+        _hud = new Hud();
 
 		add(_map._mWalls);
         add(_map._mFloor);
 		add(_player);
-        // add(_hud);
+        add(_hud);
 
         _objects = new FlxGroup();
         _objects.add(_monsters);
@@ -50,13 +50,14 @@ class PlayState extends FlxState
         _uiCamera.bgColor = FlxColor.TRANSPARENT;
 
         _gameCamera.follow(_player);
-        _gameCamera.zoom = 2;
+        _gameCamera.zoom = 4;
 
         FlxG.cameras.reset(_gameCamera);
         FlxG.cameras.add(_uiCamera);
 
         FlxCamera.defaultCameras = [_gameCamera];
-        // hudElement.cameras = [_uiCamera];
+		_uiCamera.follow(_player);
+        _hud.cameras = [_uiCamera];
 
 
 		// if (FlxG.sound.music == null)
