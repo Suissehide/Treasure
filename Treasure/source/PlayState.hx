@@ -41,8 +41,8 @@ class PlayState extends FlxState
 
 		add(_map._mWalls);
         add(_map._mFloor);
-        add(_monsters);
 		add(_player);
+        add(_monsters);
         add(_hud);
 
         _objects = new FlxGroup();
@@ -85,18 +85,24 @@ class PlayState extends FlxState
         FlxG.overlap(_monsters, _player, checkMonster);
 
         generateMonsters();
-        // if (_who)
+        if (_who)
             _player.getInput(_map._mWalls);
-        // else {
-            // for (m in _monsters)
-                // m.move(_map._mWalls);
-        // }
-        if (!_player.cooldown)
+        else {
+            for (m in _monsters)
+                m.move(_map._mWalls);
+        }
+        if (!_player._cooldown)
             _who = false;
-        if (!_player.cooldown_anim && !_player.cooldown) {
-            _player.cooldown = true;
+        else
+            _who = true;
+        if (!_player._isMoving && !_player._cooldown) {
+            _player._cooldown = true;
             _turn += 1;
             _pop = true;
+        }
+        for (m in _monsters) {
+            if (!m._isMoving && !m._cooldown)
+                m._cooldown = true;
         }
 
         // Lose menu

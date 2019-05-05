@@ -8,12 +8,12 @@ import flixel.util.FlxSpriteUtil;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 class Player extends FlxSprite {
-	public var cooldown:Bool = true;
+	public var _cooldown:Bool = true;
 
 	var LENGTH_TILE:Float = 8;
 	var SPEED:Float = 1;
 
-	public var cooldown_anim:Bool = false;
+	public var _isMoving:Bool = false;
 
 	var direction_move:Int = 0;
 	var number_anim:Float = 0;
@@ -29,55 +29,55 @@ class Player extends FlxSprite {
 		animation.add("walk", [0, 1], 10, true);
 
 		// set direct a true ou set a true quand on lance la partie
-		// cooldown = false;
+		// _cooldown = false;
 	}
 
 	public function getInput(mWalls:FlxTilemap):Void {
-		if (cooldown == true) {
+		if (_cooldown == true) {
 			// movement allowed
 			if (((FlxG.mouse.x > (x + LENGTH_TILE) && FlxG.mouse.x < (x + 2 * LENGTH_TILE) && FlxG.mouse.pressed)
 				|| FlxG.keys.anyPressed([RIGHT, D]))
 				&& !overlapsAt(x + LENGTH_TILE, y, mWalls)) {
 				// go right
 				facing = FlxObject.LEFT;
-				cooldown_anim = true;
+				_isMoving = true;
 				direction_move = 0;
-				cooldown = false;
+				_cooldown = false;
 			} else if (((FlxG.mouse.x < x && FlxG.mouse.x > (x - LENGTH_TILE) && FlxG.mouse.pressed) || FlxG.keys.anyPressed([LEFT, Q]))
 				&& !overlapsAt(x - LENGTH_TILE, y, mWalls)) {
 				// go left
 				facing = FlxObject.RIGHT;
-				cooldown_anim = true;
+				_isMoving = true;
 				direction_move = 1;
-				cooldown = false;
+				_cooldown = false;
 			} else if (((FlxG.mouse.y > (y + LENGTH_TILE) && FlxG.mouse.y < (y + 2 * LENGTH_TILE) && FlxG.mouse.pressed)
 				|| FlxG.keys.anyPressed([DOWN, S]))
 				&& !overlapsAt(x, y + LENGTH_TILE, mWalls)) {
 				// go down
-				cooldown_anim = true;
+				_isMoving = true;
 				direction_move = 2;
-				cooldown = false;
+				_cooldown = false;
 			} else if (((FlxG.mouse.y < y && FlxG.mouse.y > (y - LENGTH_TILE) && FlxG.mouse.pressed) || FlxG.keys.anyPressed([UP, Z]))
 				&& !overlapsAt(x, y - LENGTH_TILE, mWalls)) {
 				// go up
-				cooldown_anim = true;
+				_isMoving = true;
 				direction_move = 3;
-				cooldown = false;
+				_cooldown = false;
 			}
 		}
 	}
 
 	override public function update(elapsed:Float):Void {
-		if (cooldown_anim)
+		if (_isMoving)
 			animation.play("walk");
 		else
 			animation.play("idle");
 
 		if (number_anim >= LENGTH_TILE) {
 			number_anim = 0;
-			cooldown_anim = false;
+			_isMoving = false;
 		}
-		if (cooldown_anim == true) {
+		if (_isMoving == true) {
 			number_anim = number_anim + 1;
 			switch direction_move {
 				case 0:
@@ -99,5 +99,9 @@ class Player extends FlxSprite {
 			return;
 		FlxSpriteUtil.flicker(this, 1, 0.04, true);
 		super.kill();
+
+        FlxG.camera.shake(0.007, 0.25);
+		FlxG.camera.flash(0xffd8eba2, 0.65);
+		FlxG.timeScale = 0.35;
 	}
 }
