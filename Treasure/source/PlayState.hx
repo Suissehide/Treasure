@@ -5,6 +5,8 @@ import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 
 class PlayState extends FlxState
 {
@@ -20,7 +22,11 @@ class PlayState extends FlxState
     
     /* Game mechanics */
     var _turn:Int = 0;
-    
+    var _who:Bool = true;
+    var _maxSpawn:Int = 3;
+    var _spawnrate:Int = 6;
+    var _pop:Bool = true;
+
 
     // var _hud:Hud;
 	var _fading:Bool;
@@ -35,6 +41,7 @@ class PlayState extends FlxState
 
 		add(_map._mWalls);
         add(_map._mFloor);
+        add(_monsters);
 		add(_player);
         // add(_hud);
 
@@ -46,11 +53,11 @@ class PlayState extends FlxState
         _gameCamera = new FlxCamera(0, 0, 1600, 900);
         _uiCamera = new FlxCamera(0, 0, 1600, 900);
 
-        _gameCamera.bgColor = 0xff626a71;
+        _gameCamera.bgColor = 0xff191716;
         _uiCamera.bgColor = FlxColor.TRANSPARENT;
 
         _gameCamera.follow(_player);
-        _gameCamera.zoom = 2;
+        _gameCamera.zoom = 4;
 
         FlxG.cameras.reset(_gameCamera);
         FlxG.cameras.add(_uiCamera);
@@ -71,13 +78,25 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
         // Collisions with environment
-		// FlxG.collide(_objects, _map._mWalls);
+		FlxG.collide(_objects, _map._mWalls);
+
         FlxG.overlap(_player, _monsters, checkPlayer);
         FlxG.overlap(_monsters, _player, checkMonster);
 
-        _player.getInput(_map._mWalls);
-
         generateMonsters();
+        // if (_who)
+            _player.getInput(_map._mWalls);
+        // else {
+            // for (m in _monsters)
+                // m.move(_map._mWalls);
+        // }
+        if (!_player.cooldown)
+            _who = false;
+        if (!_player.cooldown_anim && !_player.cooldown) {
+            _player.cooldown = true;
+            _turn += 1;
+            _pop = true;
+        }
 
         // Lose menu
 		// if (!_player.alive)
@@ -88,9 +107,7 @@ class PlayState extends FlxState
 		// if (FlxG.keys.pressed.ESCAPE)
 			// FlxG.switchState(new MenuState());
 		// #end
-	
-        if (!_player.cooldown_anim)
-            _player.cooldown = true;
+
         super.update(elapsed);
     }
 
@@ -114,6 +131,13 @@ class PlayState extends FlxState
 	}
 
     function generateMonsters() {
-        // array = getTileCoords(Index:Int);
+        if (_turn % _spawnrate == 0 && _pop) {
+            for (i in 0..._maxSpawn) {
+                var monster = _monsters.recycle(monsters.Zombie.new.bind(0, 0, _player));
+                var r:FlxPoint = _map._mFloor.getTileCoordsByIndex(_map._spawn[FlxG.random.int(0, _map._spawn.length - 1)]);
+                monster.init(r.x - 4, r.y - 4);
+            }
+            _pop = false;
+        }
     }
 }

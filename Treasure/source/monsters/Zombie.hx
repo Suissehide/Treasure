@@ -2,16 +2,15 @@ package monsters;
 
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
-import flixel.math.FlxVelocity;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.tile.FlxTilemap;
 import flixel.util.FlxSpriteUtil;
 
 class Zombie extends Monster {
-	override public function new(xPos:Int, yPos:Int, Player:Player) {
-		super(xPos, yPos);
+    static inline var TILE_WIDTH:Int = 16;
+    var _invincible:Bool = true;
+
+	override public function new(X:Int, Y:Int, Player:Player) {
+		super(X, Y);
 
 		loadGraphic("assets/images/zombie.png", true, 8, 8);
 
@@ -23,52 +22,53 @@ class Zombie extends Monster {
         _distance = 0;
 		// playerPos = FlxPoint.get();
 
-		// width = 38;
-		// height = 42;
-		// offset.x = 30;
-		// offset.y = 48;
-
 		setFacingFlip(FlxObject.LEFT, false, false);
 		setFacingFlip(FlxObject.RIGHT, true, false);
-		animation.add("idle", [0, 1], 20, true);
-        animation.add("death", [0, 1], 20, false);
+		animation.add("idle", [0], 10, true);
+        animation.add("walk", [0, 1], 10, true);
+        animation.add("death", [3], 1, false);
         animation.add("pop", [2], 20, true);
+        animation.play("pop");
 	}
 
-    override public function update(elapsed:Float):Void {
+    public function move(mWalls:FlxTilemap):Void {
         if (_turn) {
             var diff_x = _player.x - x;
             var diff_y = _player.y - y;
             if (diff_x > 0)
-                _dir = RIGHT
+                _dir = 0;
             else if (diff_x < 0)
-                _dir = LEFT
+                _dir = 1;
             else if (diff_y > 0)
-                _dir = TOP
+                _dir = 2;
             else if (diff_y < 0)
-                _dir = DOWN
+                _dir = 3;
+            _isMoving = true;
             _turn = false;
         }
-        // if (_distance >= TILE_WIDTH) {
-        //     _distance = 0;
-        //     velocity.x = velocity.y = 0;
-        //     _isMoving = false;
-        // }
-        // if (_isMoving) {
-        //     switch (_dir) {
-        //         case TOP: velocity.y += speed;
-        //         case DOWN: velocity.y -= speed;
-        //         case LEFT: velocity.x -= speed;
-        //         case RIGHT: velocity.x += speed;
-        //     }
-        // }
+    }
 
+    override public function update(elapsed:Float):Void {
+        if (_distance >= TILE_WIDTH) {
+            _distance = 0;
+            _isMoving = false;
+        }
+        if (_isMoving) {
+            _distance += 1;
+            switch (_dir) {
+                case 0 : setPosition(x + _speed, y);
+                case 1 : setPosition(x - _speed, y);
+                case 2 : setPosition(x, y + _speed);
+                case 3 : setPosition(x, y - _speed);
+            }
+            animation.play("walk");
+        } else
+            animation.play("idle");
         super.update(elapsed);
     }
 
     override public function draw():Void {
 
-        animation.play("idle");
         if (velocity.x > 0)
             facing = FlxObject.LEFT;
         else
