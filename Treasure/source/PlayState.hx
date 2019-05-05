@@ -10,7 +10,9 @@ import flixel.math.FlxRandom;
 
 class PlayState extends FlxState
 {
-	var _map:Level;
+    static inline var TILE_WIDTH:Int = 8;
+	
+    var _map:Level;
 
     var _player:Player;
     var _monsters:FlxTypedGroup<monsters.Monster>;
@@ -23,10 +25,11 @@ class PlayState extends FlxState
     /* Game mechanics */
     var _turn:Int = 0;
     var _who:Bool = true;
-    var _maxSpawn:Int = 3;
-    var _spawnrate:Int = 6;
+    var _maxSpawn:Int = 2;
+    var _spawnrate:Int = 20;
     var _pop:Bool = true;
-
+    var _m:monsters.Monster = null;
+    var _kill:Bool = false; 
 
     var _hud:Hud;
 	var _fading:Bool;
@@ -81,6 +84,7 @@ class PlayState extends FlxState
         // Collisions with environment
 		FlxG.collide(_objects, _map._mWalls);
 
+        super.update(elapsed);
         generateMonsters();
 
         if (_who) {
@@ -88,11 +92,13 @@ class PlayState extends FlxState
             FlxG.overlap(_player, _monsters, checkPlayer);
         }
         else {
-            for (m in _monsters)
-                m.move(_map._mWalls);
+            for (m in _monsters) {
+                m.move(_map._mWalls, _monsters);
+            }
             FlxG.overlap(_monsters, _player, checkMonster);
         }
         if (!_player._isMoving && !_player._cooldown) {
+            repulse();
             _player._cooldown = true;
             _turn += 1;
             _pop = true;
@@ -104,10 +110,15 @@ class PlayState extends FlxState
                 _who = true;
             }
         }
+        if (_monsters.countLiving() == 0)
+            _who = true;
 
         // Lose menu
-		if (!_player.alive)
-			FlxG.switchState(new LoseState());
+		if (!_player._alive) {
+            FlxG.camera.fade(FlxColor.BLACK, .33, false, function() {
+			    FlxG.switchState(new LoseState());
+            });
+        }
 
         // Main menu
 		#if FLX_KEYBOARD
@@ -129,8 +140,54 @@ class PlayState extends FlxState
 		super.destroy();
 	}
 
+    function getMonster(x:Float, y:Float):Bool {
+        for (m in _monsters) {
+            if (m.x == x && m.y == y) {
+                _m = m;
+                return true;
+            }
+        }
+        _m = null;
+        return false;
+    }
+
+    function isEmpty(x:Float, y:Float):Bool {
+        if (!_m.checkEntity(x, y, _map._mWalls, _monsters)) {
+            _player.kill();
+            return (true);
+        }
+        return (false);
+    }
+
+    function repulseMonster(i:Int)
+    {
+        switch i {
+            case 0: if (getMonster(_player.x, _player.y - TILE_WIDTH) &&
+                    isEmpty(_player.x, _player.y - 2 * TILE_WIDTH))
+                        _m.repulse(_player.x, _player.y - 2 * TILE_WIDTH);
+            case 2: if (getMonster(_player.x  - TILE_WIDTH, _player.y) &&
+                    isEmpty(_player.x - 2 * TILE_WIDTH, _player.y))
+                        _m.repulse(_player.x - 2 * TILE_WIDTH, _player.y);
+            case 4: if (getMonster(_player.x, _player.y + TILE_WIDTH) &&
+                    isEmpty(_player.x, _player.y + 2 * TILE_WIDTH))
+                        _m.repulse(_player.x, _player.y + 2 * TILE_WIDTH);
+            case 6: if (getMonster(_player.x + TILE_WIDTH, _player.y) &&
+                    isEmpty(_player.x + 2 * TILE_WIDTH, _player.y))
+                        _m.repulse(_player.x + 2 * TILE_WIDTH, _player.y);
+        }
+    }
+
+    function repulse() {
+        if (_kill) {
+            for (i in 0...8)
+                repulseMonster(i);
+            _kill = false;
+        }
+    }
+
 	function checkPlayer(p:Player, e:monsters.Monster):Void {
 		e.kill();
+        _kill = true;
 	}
 
 	function checkMonster(e:monsters.Monster, p:Player):Void {
@@ -140,7 +197,8 @@ class PlayState extends FlxState
     function generateMonsters() {
         if (_turn % _spawnrate == 0 && _pop) {
             for (i in 0..._maxSpawn) {
-                var monster = _monsters.recycle(monsters.Zombie.new.bind(0, 0, _player));
+                var monster = _monsters.add(new monsters.Zombie(0, 0, _player));
+                // var monster = _monsters.recycle(monsters.Zombie.new.bind(0, 0, _player));
                 var r:FlxPoint = _map._mFloor.getTileCoordsByIndex(_map._spawn[FlxG.random.int(0, _map._spawn.length - 1)]);
                 monster.init(r.x - 4, r.y - 4);
             }

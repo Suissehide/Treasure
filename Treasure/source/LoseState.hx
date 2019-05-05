@@ -23,7 +23,7 @@ class LoseState extends FlxState
         _esc.screenCenter();
 		add(_esc);
 
-        FlxSpriteUtil.flicker(_esc, 0, 0.2, true);
+        FlxSpriteUtil.flicker(_esc, 0, 0.3, true);
 
 		_gmTxt = new FlxText(300, 100, 0, "Game Over", 150);
         _gmTxt.setFormat("assets/fonts/Stardew_Valley.otf");

@@ -25,7 +25,6 @@ class Zombie extends Monster {
         animation.add("walk", [0, 1], 10, true);
         animation.add("death", [3], 1, true);
         animation.add("pop", [2], 20, true);
-        animation.play("pop");
 	}
 
     override public function update(elapsed:Float):Void {
@@ -42,6 +41,8 @@ class Zombie extends Monster {
                 case 3 : setPosition(x, y - _speed);
             }
             animation.play("walk");
+        } else if (_spawning) {
+            animation.play("pop");
         } else
             animation.play("idle");
         super.update(elapsed);

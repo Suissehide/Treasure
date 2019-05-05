@@ -14,6 +14,7 @@ class Player extends FlxSprite {
 	var SPEED:Float = 1;
 
 	public var _isMoving:Bool = false;
+    public var _alive:Bool = true;
 
 	var direction_move:Int = 0;
 	var number_anim:Float = 0;
@@ -97,11 +98,19 @@ class Player extends FlxSprite {
 	override public function kill():Void {
 		if (!alive)
 			return;
+
+        super.kill();
 		FlxSpriteUtil.flicker(this, 1, 0.04, true);
-		super.kill();
 
         FlxG.camera.shake(0.007, 0.25);
-		FlxG.camera.flash(0xffd8eba2, 0.65);
+		FlxG.camera.flash(0xffd8eba2, 0.65, turnOffSlowMo);
 		FlxG.timeScale = 0.35;
 	}
+    
+    function turnOffSlowMo():Void
+	{
+		FlxG.timeScale = 1.0;
+        _alive = false;
+	}
+
 }
