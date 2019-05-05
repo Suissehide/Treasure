@@ -21,7 +21,6 @@ class PlayState extends FlxState
     var _uiCamera:FlxCamera;
     
     /* Game mechanics */
-    var _turn:Int = 0;
     var _who:Bool = true;
     var _maxSpawn:Int = 3;
     var _spawnrate:Int = 6;
@@ -31,13 +30,16 @@ class PlayState extends FlxState
     var _hud:Hud;
 	var _fading:Bool;
 
+	public var _turn:Int = 0;
+
+
 	override public function create():Void
 	{
         _monsters = new FlxTypedGroup<monsters.Monster>();
         _player = new Player(0, 0);
         _map = new Level(_player, _monsters);
     
-        _hud = new Hud(_player);
+        _hud = new Hud(_player, this);
 
 		add(_map._mWalls);
         add(_map._mFloor);
