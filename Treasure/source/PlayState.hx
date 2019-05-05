@@ -37,7 +37,7 @@ class PlayState extends FlxState
         _player = new Player(0, 0);
         _map = new Level(_player, _monsters);
     
-        _hud = new Hud();
+        _hud = new Hud(_player);
 
 		add(_map._mWalls);
         add(_map._mFloor);
