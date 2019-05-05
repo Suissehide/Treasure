@@ -70,7 +70,7 @@ class PlayState extends FlxState
 		// if (FlxG.sound.music == null)
 			// FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/ost"), 0.3);
 
-		FlxG.cameras.flash(0xff131c1b);
+		FlxG.cameras.flash(0xff131c1b, 0.65);
 		_fading = false;
 
 		super.create();
@@ -81,39 +81,39 @@ class PlayState extends FlxState
         // Collisions with environment
 		FlxG.collide(_objects, _map._mWalls);
 
-        FlxG.overlap(_player, _monsters, checkPlayer);
-        FlxG.overlap(_monsters, _player, checkMonster);
-
         generateMonsters();
-        if (_who)
+
+        if (_who) {
             _player.getInput(_map._mWalls);
+            FlxG.overlap(_player, _monsters, checkPlayer);
+        }
         else {
             for (m in _monsters)
                 m.move(_map._mWalls);
+            FlxG.overlap(_monsters, _player, checkMonster);
         }
-        if (!_player._cooldown)
-            _who = false;
-        else
-            _who = true;
         if (!_player._isMoving && !_player._cooldown) {
             _player._cooldown = true;
             _turn += 1;
             _pop = true;
+            _who = false;
         }
         for (m in _monsters) {
-            if (!m._isMoving && !m._cooldown)
+            if (!m._isMoving && !m._cooldown) {
                 m._cooldown = true;
+                _who = true;
+            }
         }
 
         // Lose menu
-		// if (!_player.alive)
-			// FlxG.switchState(new LoseState());
+		if (!_player.alive)
+			FlxG.switchState(new LoseState());
 
         // Main menu
-		// #if FLX_KEYBOARD
-		// if (FlxG.keys.pressed.ESCAPE)
-			// FlxG.switchState(new MenuState());
-		// #end
+		#if FLX_KEYBOARD
+		if (FlxG.keys.pressed.ESCAPE)
+			FlxG.switchState(new MenuState());
+		#end
 
         super.update(elapsed);
     }
