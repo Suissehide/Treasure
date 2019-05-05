@@ -2,14 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.FlxObject;
 import flixel.FlxCamera;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup;
-
-import flixel.tile.FlxTilemap;
-import flixel.addons.editors.ogmo.FlxOgmoLoader;
 
 class PlayState extends FlxState
 {
@@ -19,6 +14,13 @@ class PlayState extends FlxState
     var _monsters:FlxTypedGroup<monsters.Monster>;
 
 	var _objects:FlxGroup;
+
+    var _gameCamera:FlxCamera;
+    var _uiCamera:FlxCamera;
+    
+    /* Game mechanics */
+    var _turn:Int = 0;
+    
 
     // var _hud:Hud;
 	var _fading:Bool;
@@ -40,11 +42,22 @@ class PlayState extends FlxState
         _objects.add(_monsters);
 		_objects.add(_player);
 
-		camera = new FlxCamera(0, 0, 1600, 900);
-		camera.bgColor = FlxColor.TRANSPARENT;
-        camera.zoom = 4;
-        FlxG.cameras.reset(camera);
-		camera.target = _player;
+        /* Cameras */
+        _gameCamera = new FlxCamera(0, 0, 1600, 900);
+        _uiCamera = new FlxCamera(0, 0, 1600, 900);
+
+        _gameCamera.bgColor = 0xff626a71;
+        _uiCamera.bgColor = FlxColor.TRANSPARENT;
+
+        _gameCamera.follow(_player);
+        _gameCamera.zoom = 2;
+
+        FlxG.cameras.reset(_gameCamera);
+        FlxG.cameras.add(_uiCamera);
+
+        FlxCamera.defaultCameras = [_gameCamera];
+        // hudElement.cameras = [_uiCamera];
+
 
 		// if (FlxG.sound.music == null)
 			// FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/ost"), 0.3);
@@ -57,12 +70,12 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-		super.update(elapsed);
-
         // Collisions with environment
-		FlxG.collide(_map._mWalls, _objects);
+		// FlxG.collide(_objects, _map._mWalls);
         FlxG.overlap(_player, _monsters, checkPlayer);
         FlxG.overlap(_monsters, _player, checkMonster);
+
+        _player.getInput(_map._mWalls);
 
         generateMonsters();
 
@@ -78,6 +91,7 @@ class PlayState extends FlxState
 	
         if (!_player.cooldown_anim)
             _player.cooldown = true;
+        super.update(elapsed);
     }
 
     override public function destroy():Void {

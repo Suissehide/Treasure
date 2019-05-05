@@ -10,7 +10,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSpriteUtil;
 
 class Zombie extends Monster {
-	override public function new(xPos:Int, yPos:Int, Player:player.Player) {
+	override public function new(xPos:Int, yPos:Int, Player:Player) {
 		super(xPos, yPos);
 
 		loadGraphic("assets/images/zombie.png", true, 8, 8);
@@ -32,6 +32,7 @@ class Zombie extends Monster {
 		setFacingFlip(FlxObject.RIGHT, true, false);
 		animation.add("idle", [0, 1], 20, true);
         animation.add("death", [0, 1], 20, false);
+        animation.add("pop", [2], 20, true);
 	}
 
     override public function update(elapsed:Float):Void {
@@ -48,19 +49,19 @@ class Zombie extends Monster {
                 _dir = DOWN
             _turn = false;
         }
-        if (_distance >= TILE_WIDTH) {
-            _distance = 0;
-            velocity.x = velocity.y = 0;
-            _isMoving = false;
-        }
-        if (_isMoving) {
-            switch (_dir) {
-                case TOP: velocity.y += speed;
-                case DOWN: velocity.y -= speed;
-                case LEFT: velocity.x -= speed;
-                case RIGHT: velocity.x += speed;
-            }
-        }
+        // if (_distance >= TILE_WIDTH) {
+        //     _distance = 0;
+        //     velocity.x = velocity.y = 0;
+        //     _isMoving = false;
+        // }
+        // if (_isMoving) {
+        //     switch (_dir) {
+        //         case TOP: velocity.y += speed;
+        //         case DOWN: velocity.y -= speed;
+        //         case LEFT: velocity.x -= speed;
+        //         case RIGHT: velocity.x += speed;
+        //     }
+        // }
 
         super.update(elapsed);
     }
