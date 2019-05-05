@@ -7,12 +7,10 @@ import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRandom;
+import flixel.system.FlxAssets;
 
 class PlayState extends FlxState
 {
-    static inline var TILE_WIDTH:Int = 8;
-	
-    var _map:Level;
 
     var _player:Player;
     var _monsters:FlxTypedGroup<monsters.Monster>;
@@ -23,7 +21,6 @@ class PlayState extends FlxState
     var _uiCamera:FlxCamera;
     
     /* Game mechanics */
-    var _turn:Int = 0;
     var _who:Bool = true;
     var _maxSpawn:Int = 2;
     var _spawnrate:Int = 20;
@@ -34,13 +31,16 @@ class PlayState extends FlxState
     var _hud:Hud;
 	var _fading:Bool;
 
+	public var _turn:Int = 0;
+	public var _map:Level;
+
 	override public function create():Void
 	{
         _monsters = new FlxTypedGroup<monsters.Monster>();
         _player = new Player(0, 0);
         _map = new Level(_player, _monsters);
     
-        _hud = new Hud();
+        _hud = new Hud(_player, this);
 
 		add(_map._mWalls);
         add(_map._mFloor);
@@ -70,8 +70,8 @@ class PlayState extends FlxState
         _hud.cameras = [_uiCamera];
 
 
-		// if (FlxG.sound.music == null)
-			// FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/ost"), 0.3);
+		if (FlxG.sound.music == null)
+		    FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/Celestial"), 0.3);
 
 		FlxG.cameras.flash(0xff131c1b, 0.65);
 		_fading = false;
