@@ -17,6 +17,7 @@ class Player extends FlxSprite {
 
 	var direction_move:Int = 0;
 	var number_anim:Float = 0;
+	var lesuperint:Int;
 
 	public function new(X:Float, Y:Float) {
 		super(X, Y);
@@ -67,6 +68,10 @@ class Player extends FlxSprite {
 		}
 	}
 
+	public function setToDig():Void {
+		lesuperint = 1;
+	}
+
 	override public function update(elapsed:Float):Void {
 		if (_isMoving)
 			animation.play("walk");
@@ -94,9 +99,17 @@ class Player extends FlxSprite {
 		super.update(elapsed);
 	}
 
-	public function dig(_level:Level) {
+	public function goDig(Level:Level):Void {
+		if(lesuperint == 1)
+				FlxG.switchState(new MenuState());
+			//dig(Level);
+	}
+
+	public function dig(_level:Level):Void {
 		if (checkVictory(_level) == 0)
 			FlxG.switchState(new VictoryState());
+		else
+			lesuperint = 0;
 	}
 
 	public function checkVictory(_level:Level):Int {

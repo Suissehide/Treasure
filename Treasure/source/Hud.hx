@@ -17,6 +17,7 @@ class Hud extends FlxTypedGroup<FlxSprite> {
     var _turnNumber:FlxText;
     var _player:Player;
     var _turn:PlayState;
+    var _level:Level;
     var _pos:Float;
 
     public function new(Player:Player, Turn:PlayState) {
@@ -34,7 +35,7 @@ class Hud extends FlxTypedGroup<FlxSprite> {
         _passButton.loadGraphic("assets/images/buttonPass.png", true, 175, 154);
         _passButton.scale.set(0.2, 0.2);
         _passButton.updateHitbox();
-        _digButton = new FlxButton((((_player.x) *8) - 290), (((_player.y) * 8) + 130), "");
+        _digButton = new FlxButton((((_player.x) *8) - 290), (((_player.y) * 8) + 130), "", testo);
         _digButton.loadGraphic("assets/images/buttonShovel.png", true, 175, 154);
         _digButton.scale.set(0.2, 0.2);
         _digButton.updateHitbox();
@@ -47,6 +48,11 @@ class Hud extends FlxTypedGroup<FlxSprite> {
 			spr.scrollFactor.set(0, 0);
 		});
     }
+
+    public function testo():Void {
+				FlxG.switchState(new MenuState());
+			//dig(Level);
+	}
 
     override public function update(elapsed:Float):Void {
         _turnNumber.text = "Turn: " + _turn._turn;

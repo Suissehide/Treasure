@@ -11,7 +11,6 @@ import flixel.system.FlxAssets;
 
 class PlayState extends FlxState
 {
-	var _map:Level;
 
     var _player:Player;
     var _monsters:FlxTypedGroup<monsters.Monster>;
@@ -23,7 +22,7 @@ class PlayState extends FlxState
     
     /* Game mechanics */
     var _who:Bool = true;
-    var _maxSpawn:Int = 3;
+    var _maxSpawn:Int = 1;
     var _spawnrate:Int = 6;
     var _pop:Bool = true;
 
@@ -32,7 +31,7 @@ class PlayState extends FlxState
 	var _fading:Bool;
 
 	public var _turn:Int = 0;
-
+	public var _map:Level;
 
 	override public function create():Void
 	{
