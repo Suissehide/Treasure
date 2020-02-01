@@ -52,6 +52,8 @@ import sys.FileSystem;
 		Assets.defaultRootPath = rootPath;
 
 		#if (openfl && !flash && !display)
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_blacksword_blacksword_otf);
+		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_stardew_valley_otf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__flixel_fonts_monsterrat_ttf);
 		
@@ -95,15 +97,45 @@ null
 #if !display
 #if flash
 
-@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_level_1_old_oel extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_level_2_oel extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_place_txt extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_menustate_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_level_1_oel extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_celestial_ogg extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_music_music_goes_here_txt extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_loupe_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_ponctuation_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_garden_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_button2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_zombie_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_fxjxzxui_jpeg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_buttonpass_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_scroll_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_arrow_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_menubackground_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_button_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_magicscroll_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_images_go_here_txt extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_adom_oga_ui_smartobject_psd extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_player_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_adom_oga_ui_smartobject__1__psd extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_shovel_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_button1_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_buttoninfo_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_homebackground_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_scroll_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_table_jpg extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_adom_oga_ui_deploy_psd extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_buttonshovel_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_fonts_blacksword_zip extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_fonts_blacksword_read_me_txt extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_fonts_blacksword_blacksword_otf extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_fonts_stardew_valley_otf extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_maps_firstlevel_oel extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_maps_seclevel_oel extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__flixel_sounds_flixel_ogg extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__flixel_sounds_beep_ogg extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends null { }
@@ -122,10 +154,14 @@ null
 @:keep @:image("/home/lcouffinhal/haxelib/flixel/4,6,1/assets/images/ui/button.png") @:noCompletion #if display private #end class __ASSET__flixel_images_ui_button_png extends lime.graphics.Image {}
 @:keep @:image("/home/lcouffinhal/haxelib/flixel/4,6,1/assets/images/logo/default.png") @:noCompletion #if display private #end class __ASSET__flixel_images_logo_default_png extends lime.graphics.Image {}
 
+@:keep @:noCompletion #if display private #end class __ASSET__assets_fonts_blacksword_blacksword_otf extends lime.text.Font { public function new () { __fontPath = ManifestResources.rootPath + "assets/fonts/blacksword/Blacksword.otf"; name = "Blacksword"; super (); }}
+@:keep @:noCompletion #if display private #end class __ASSET__assets_fonts_stardew_valley_otf extends lime.text.Font { public function new () { __fontPath = ManifestResources.rootPath + "assets/fonts/Stardew_Valley.otf"; name = "Stardew Valley Regular"; super (); }}
 
 
 #else
 
+@:keep @:expose('__ASSET__assets_fonts_blacksword_blacksword_otf') @:noCompletion #if display private #end class __ASSET__assets_fonts_blacksword_blacksword_otf extends lime.text.Font { public function new () { #if !html5 __fontPath = "assets/fonts/blacksword/Blacksword.otf"; #else ascender = null; descender = null; height = null; numGlyphs = null; underlinePosition = null; underlineThickness = null; unitsPerEM = null; #end name = "Blacksword"; super (); }}
+@:keep @:expose('__ASSET__assets_fonts_stardew_valley_otf') @:noCompletion #if display private #end class __ASSET__assets_fonts_stardew_valley_otf extends lime.text.Font { public function new () { #if !html5 __fontPath = "assets/fonts/Stardew_Valley.otf"; #else ascender = null; descender = null; height = null; numGlyphs = null; underlinePosition = null; underlineThickness = null; unitsPerEM = null; #end name = "Stardew Valley Regular"; super (); }}
 @:keep @:expose('__ASSET__flixel_fonts_nokiafc22_ttf') @:noCompletion #if display private #end class __ASSET__flixel_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { #if !html5 __fontPath = "flixel/fonts/nokiafc22.ttf"; #else ascender = null; descender = null; height = null; numGlyphs = null; underlinePosition = null; underlineThickness = null; unitsPerEM = null; #end name = "Nokia Cellphone FC Small"; super (); }}
 @:keep @:expose('__ASSET__flixel_fonts_monsterrat_ttf') @:noCompletion #if display private #end class __ASSET__flixel_fonts_monsterrat_ttf extends lime.text.Font { public function new () { #if !html5 __fontPath = "flixel/fonts/monsterrat.ttf"; #else ascender = null; descender = null; height = null; numGlyphs = null; underlinePosition = null; underlineThickness = null; unitsPerEM = null; #end name = "Monsterrat"; super (); }}
 
@@ -135,10 +171,14 @@ null
 #if (openfl && !flash)
 
 #if html5
+@:keep @:expose('__ASSET__OPENFL__assets_fonts_blacksword_blacksword_otf') @:noCompletion #if display private #end class __ASSET__OPENFL__assets_fonts_blacksword_blacksword_otf extends openfl.text.Font { public function new () { name = "Blacksword"; super (); }}
+@:keep @:expose('__ASSET__OPENFL__assets_fonts_stardew_valley_otf') @:noCompletion #if display private #end class __ASSET__OPENFL__assets_fonts_stardew_valley_otf extends openfl.text.Font { public function new () { name = "Stardew Valley Regular"; super (); }}
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf') @:noCompletion #if display private #end class __ASSET__OPENFL__flixel_fonts_nokiafc22_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_nokiafc22_ttf ()); super (); }}
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_monsterrat_ttf') @:noCompletion #if display private #end class __ASSET__OPENFL__flixel_fonts_monsterrat_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_monsterrat_ttf ()); super (); }}
 
 #else
+@:keep @:expose('__ASSET__OPENFL__assets_fonts_blacksword_blacksword_otf') @:noCompletion #if display private #end class __ASSET__OPENFL__assets_fonts_blacksword_blacksword_otf extends openfl.text.Font { public function new () { __fontPath = ManifestResources.rootPath + "assets/fonts/blacksword/Blacksword.otf"; name = "Blacksword"; super (); }}
+@:keep @:expose('__ASSET__OPENFL__assets_fonts_stardew_valley_otf') @:noCompletion #if display private #end class __ASSET__OPENFL__assets_fonts_stardew_valley_otf extends openfl.text.Font { public function new () { __fontPath = ManifestResources.rootPath + "assets/fonts/Stardew_Valley.otf"; name = "Stardew Valley Regular"; super (); }}
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf') @:noCompletion #if display private #end class __ASSET__OPENFL__flixel_fonts_nokiafc22_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_nokiafc22_ttf ()); super (); }}
 @:keep @:expose('__ASSET__OPENFL__flixel_fonts_monsterrat_ttf') @:noCompletion #if display private #end class __ASSET__OPENFL__flixel_fonts_monsterrat_ttf extends openfl.text.Font { public function new () { __fromLimeFont (new __ASSET__flixel_fonts_monsterrat_ttf ()); super (); }}
 
